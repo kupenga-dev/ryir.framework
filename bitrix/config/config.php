@@ -17,7 +17,7 @@ return [
             "method" => 'GET',
         ],
         [
-            "pattern" => "~^/profile$~",
+            "pattern" => "#/profile/(?P<id>\d+)$#i",
             "page_name" => "profile",
             "method" => 'GET',
         ],
@@ -26,7 +26,6 @@ return [
             "page_name" => "null",
             "method" => 'POST',
             "namespace" => "App\Controllers\Auth",
-            "form_data" => 1,
             "action" => "register"
         ],
         [
@@ -34,7 +33,6 @@ return [
             "page_name" => "null",
             "method" => 'POST',
             "namespace" => "App\Controllers\Auth",
-            "form_data" => 1,
             "action" => "auth"
         ],
         [
@@ -42,7 +40,6 @@ return [
             "page_name" => "null",
             "method" => 'POST',
             "namespace" => "App\Controllers\Auth",
-            "form_data" => 0,
             "action" => "logout"
         ],
     ]

@@ -19,10 +19,9 @@ class Auth
         $this->databaseItem = NULL;
     }
 
-    public function register($data)
+    public function register()
     {   
-        var_dump($this->isValidRegistration($data));
-        
+        $data = json_decode(file_get_contents("php://input"), true);
         if($this->isValidRegistration($data))
         {
             $sault = $this->GenerateRandomString();
@@ -41,8 +40,9 @@ class Auth
         return false;
     }
 
-    public function auth($data)
+    public function auth()
     {
+        $data = json_decode(file_get_contents("php://input"), true);
         $username = $data['username'];
         $password = $data['password'];
         $user = $this->databaseItem->findUserByUsername($username, true);
@@ -107,4 +107,3 @@ class Auth
     }
     
 }
-?>
