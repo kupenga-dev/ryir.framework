@@ -7,6 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
 {
     public static $prefixLengthsPsr4 = array (
+        'R' => 
+        array (
+            'Ryir\\' => 5,
+        ),
+        'P' => 
+        array (
+            'Public\\' => 7,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -14,6 +22,14 @@ class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
     );
 
     public static $prefixDirsPsr4 = array (
+        'Ryir\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/ryir',
+        ),
+        'Public\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/public',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -21,10 +37,15 @@ class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
     );
 
     public static $classMap = array (
-        'App\\Controllers\\Auth' => __DIR__ . '/../..' . '/app/Controllers/Auth.php',
+        'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
+        'App\\Controllers\\PublicPageController' => __DIR__ . '/../..' . '/app/Controllers/PublicPageController.php',
+        'App\\Services\\Auth' => __DIR__ . '/../..' . '/app/Services/Auth.php',
+        'App\\Services\\Config' => __DIR__ . '/../..' . '/app/Services/Config.php',
         'App\\Services\\Database' => __DIR__ . '/../..' . '/app/Services/Database.php',
-        'App\\Services\\Router' => __DIR__ . '/../..' . '/app/Services/Router.php',
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Ryir\\Core\\Application' => __DIR__ . '/../..' . '/ryir/Core/Application.php',
+        'Ryir\\Core\\Page' => __DIR__ . '/../..' . '/ryir/Core/Page.php',
+        'Ryir\\Core\\Router' => __DIR__ . '/../..' . '/ryir/Core/Router.php',
+        'Ryir\\Core\\SingletonTrait' => __DIR__ . '/../..' . '/ryir/Core/Trait/SingletonTrait.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

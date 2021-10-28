@@ -1,46 +1,83 @@
 <?php
 
 return [
-    "db" => [
-        "login" => "gregreg",
-        "password" => "ihgjoref",
+    'db' => [
+        'login' => 'gregreg',
+        'password' => 'ihgjoref',
     ],
-    "routes" => [
+    'routes' => [
         [
-            "pattern" => "~^/$~",
-            "page_name" => "login",
-            "method" => 'GET'
+            'pattern' => "~^/$~",
+            'params' => [
+                'path' => 'login.php',
+                'method' => 'GET',
+                'controller' => "\App\Controllers\PublicPageController"
+            ]
         ],
         [
-            "pattern" => "~^/registration$~",
-            "page_name" => "register",
-            "method" => 'GET',
+            'pattern' => "~home~",
+            'params' => [
+                'path' => 'home.php',
+                'method' => 'GET',
+                'controller' => "\App\Controllers\PublicPageController"
+            ]
         ],
         [
-            "pattern" => "#/profile/(?P<id>\d+)$#i",
-            "page_name" => "profile",
-            "method" => 'GET',
+            'pattern' => "~^/registration$~",
+            'params' => [
+                'path' => 'register.php',
+                'method' => 'GET',
+                'controller' => "\App\Controllers\PublicPageController"
+            ]
         ],
         [
-            "pattern" => "~^/auth/register$~",
-            "page_name" => "null",
-            "method" => 'POST',
-            "namespace" => "App\Controllers\Auth",
-            "action" => "register"
+            'pattern' => "#/profile/(?P<id>\d+)$#i",
+            'params' => [
+                'path' => 'profile.php',
+                'method' => 'GET',
+                'controller' => "\App\Controllers\PublicPageController"
+            ]
         ],
         [
-            "pattern" => "~^/auth/auth$~",
-            "page_name" => "null",
-            "method" => 'POST',
-            "namespace" => "App\Controllers\Auth",
-            "action" => "auth"
+            'pattern' => "#/profile#i",
+            'params' => [
+                'path' => 'profile.php',
+                'method' => 'GET',
+                'controller' => "\App\Controllers\PublicPageController"
+            ]
         ],
         [
-            "pattern" => "~^/auth/logout$~",
-            "page_name" => "null",
-            "method" => 'POST',
-            "namespace" => "App\Controllers\Auth",
-            "action" => "logout"
+            'pattern' => "~^/auth/register$~",
+            'params' => [
+                'method' => 'POST',
+                'controller' => "\App\Controllers\AuthController",
+                'class' => "\App\Services\Auth",
+                'action' => "register",
+            ],
+
         ],
-    ]
+        [
+            'pattern' => "~^/auth/auth$~",
+            'params' => [
+                'method' => 'POST',
+                'controller' => "\App\Controllers\AuthController",
+                'class' => "\App\Services\Auth",
+                'action' => "auth",
+            ]
+        ],
+        [
+            'pattern' => "~^/auth/logout$~",
+            'params' => [
+                'method' => 'POST',
+                'controller' => "\App\Controllers\AuthController",
+                'class' => "\App\Services\Auth",
+                'action' => "logout",
+            ]
+        ],
+    ],
+    // "component" => [
+    //     "id" => "NeX",
+    //     "template_id" => "alice",
+    // ]
+    "template_id" => "alice"
 ];

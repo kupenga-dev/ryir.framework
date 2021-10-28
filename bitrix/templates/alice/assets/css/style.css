@@ -69,7 +69,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background: rgb(51, 50, 50, 0.9) url("/assests/gif/___-1.gif") center / 50px no-repeat;
+    background: rgb(51, 50, 50, 0.9) url("/bitrix/public/views/assets/gif/___-1.gif") center / 50px no-repeat;
     opacity: 0;
     visibility: hidden;
 }

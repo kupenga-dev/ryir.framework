@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Patterns;
+namespace Ryir\Core\Traits;
 
 
-trait SingletonTrait {
+trait SingletonTrait
+{
 
     private static $Instance = null;
 
@@ -11,7 +12,7 @@ trait SingletonTrait {
     {
         return static::$Instance ?? (static::$Instance = new static());
     }
-    
+
     private function __wakeup()
     {
         //
@@ -21,10 +22,4 @@ trait SingletonTrait {
     {
         //
     }
-
-
 }
-
-
-
-?>

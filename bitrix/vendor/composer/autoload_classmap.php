@@ -6,8 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Controllers\\Auth' => $baseDir . '/app/Controllers/Auth.php',
+    'App\\Controllers\\BaseController' => $baseDir . '/app/Controllers/BaseController.php',
+    'App\\Controllers\\PublicPageController' => $baseDir . '/app/Controllers/PublicPageController.php',
+    'App\\Services\\Auth' => $baseDir . '/app/Services/Auth.php',
+    'App\\Services\\Config' => $baseDir . '/app/Services/Config.php',
     'App\\Services\\Database' => $baseDir . '/app/Services/Database.php',
-    'App\\Services\\Router' => $baseDir . '/app/Services/Router.php',
-    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Ryir\\Core\\Application' => $baseDir . '/ryir/Core/Application.php',
+    'Ryir\\Core\\Page' => $baseDir . '/ryir/Core/Page.php',
+    'Ryir\\Core\\Router' => $baseDir . '/ryir/Core/Router.php',
+    'Ryir\\Core\\SingletonTrait' => $baseDir . '/ryir/Core/Trait/SingletonTrait.php',
 );

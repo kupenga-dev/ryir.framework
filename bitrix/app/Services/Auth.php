@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Services;
 
-use App\Services\Router;
-use App\Services\Database;
 
 class Auth 
 {
     private $databaseItem;
+    private $data;
    
 
     public function __construct()
     {
         $this->databaseItem = new Database;
+        $this->data = json_decode(file_get_contents("php://input"), true);
     }
     public function __destruct()
     {
@@ -21,7 +21,7 @@ class Auth
 
     public function register()
     {   
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = $this->data;
         if($this->isValidRegistration($data))
         {
             $sault = $this->GenerateRandomString();
@@ -42,7 +42,7 @@ class Auth
 
     public function auth()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = $this->data;
         $username = $data['username'];
         $password = $data['password'];
         $user = $this->databaseItem->findUserByUsername($username, true);
@@ -66,7 +66,7 @@ class Auth
     public function logout()
     {
         unset($_SESSION['user']);
-        \App\Services\Router::redirect('/');
+        \Ryir\Core\Router::redirect('/');
     }
 
     private function isValidRegistration($data)
