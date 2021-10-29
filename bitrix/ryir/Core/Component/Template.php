@@ -5,31 +5,33 @@ namespace Ryir\Core\Component;
 
 class Template
 {
-    use \Ryir\Core\Traits\SingletonTrait;
     private $id;
     private $template;
-    private $__path; //путь к шаблону на сервере
+    // private $params = [];
+    private $__path; //путь к шаблону на сервере $this->appItem->getServer();
     private $__relativePath; //url к папке с шаблоном
+    private $page;
 
-    private function __construct()
+    public function __construct(string $id, string $template)
     {
-        $this->appItem = \Ryir\Core\Application::getInstance();
-        $this->page = $this->appItem->getPage();
-        unset($appTem);
-        $this->id = \App\Services\Config::get('component/id');
-        $this->template = \App\Services\Config::get('component/template_id');
-        $this->__path = $_SERVER['DOCUMENT_ROOT'] . "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->page = \Ryir\Core\Application::getInstance()->getPage();
+        $this->docroot = \Ryir\Core\Application::getInstance()->getServer()->getDocumentRoot();
+        // $this->params = $params;
+        $this->id = $id;
+        $this->template = $template;
         $this->__relativePath = "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->__path = $this->docroot . $this->__relativePath;
+        
     }
 
     public function render(string $page) // должен подключать файл шаблона, + стили и js | $page - страница подключения в шаблоне. По дефолту template.php
     {
-        if (file_exists($this->__path . "/" . $page)) {
+        if (file_exists($this->__path . "/" . $page . ".php")) {
             include $this->__path . "/" . $page;
         } else {
             include $this->__path . "/" . "template.php";
         }
-        $this->page->addCss($this->__relativePath . "/script.js");
-        $this->page->addJs($this->__relativePath . "/style.css");
+        $this->page->addJs($this->__relativePath . "/script.js");
+        $this->page->addCSS($this->__relativePath . "/style.css");
     }
 }

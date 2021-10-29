@@ -12,5 +12,11 @@ abstract class Base
     public $__path;
 
     abstract function executeComponent();
-    abstract function __construct();
+    public function __construct(string $id, string $template, array $params)
+    {
+        $this->id = $id;
+        $this->template = $template;
+        $this->params = $params;
+    }
+    
 }

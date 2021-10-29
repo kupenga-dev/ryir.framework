@@ -4,19 +4,21 @@ namespace Ryir\Core;
 
 class Page
 {
-
     private $src = [];
     private $link = [];
     private $strings = [];
     private $path;
+    private $docroot;
     private $replace = [];
     private $templateItem;
     private $property = [];
     private $macro = [];
+
     use \Ryir\Core\Traits\SingletonTrait;
 
-    private function __construct()
+    public function __construct()
     {
+        // $this->docroot = $path;
         $this->templateItem = \Ryir\Core\SitesTempalte::getInstance();
         $this->path = "/templates/" . $this->templateItem->id . "/assets";
         unset($this->templateItem);
@@ -34,6 +36,10 @@ class Page
         if (!isset($this->link[$path])) {
             $this->link[$path] = $path;
         }
+    }
+    public function setPath($path)
+    {
+        $this->docroot = $path;
     }
     public function addString($string) // добавляет в массив для хранения
     {
@@ -58,7 +64,7 @@ class Page
         $contentCSS = '';
         $contentString = '';
         foreach ($this->src as $value) {
-            if (file_exists($value)) {
+            if (file_exists($this->docroot . "/" . $value)) {
                 $contentJS .= '<script src="' . $value . '"></script>';
             } else {
                 $contentJS .= '<script src="' . $this->path . $value . '"></script>';
@@ -66,7 +72,7 @@ class Page
         }
 
         foreach ($this->link as $value) {
-            if (file_exists($value)) {
+            if (file_exists($this->docroot . "/" . $value)) {
                 $contentCSS .= '<link rel="stylesheet" type="text/css" href="' . $value . '">';
             } else {
                 $contentCSS .= '<link rel="stylesheet" type="text/css" href="' . $this->path . $value . '">';

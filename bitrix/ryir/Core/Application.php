@@ -11,6 +11,7 @@ final class Application
     private $request;
     private $server;
     private $componentItem;
+    private $componentTemplate;
     private $pager =  null; // будет объект класса
     private $template = null; //будет объект класса
 
@@ -18,8 +19,9 @@ final class Application
     {
         $this->pager = Page::getInstance();
         $this->template = \Ryir\Core\SitesTempalte::getInstance();
-        $this->request = new \Ryir\Core\Request;
-        $this->server = new \Ryir\Core\Server;
+        $this->request = new \Ryir\Core\Request($_REQUEST);
+        $this->server = new \Ryir\Core\Server($_SERVER);
+        $this->pager->setPath($this->server->getDocumentRoot());
     }
 
     public function getServer()
@@ -42,20 +44,20 @@ final class Application
         }
     }
 
-    private function includeComponent(string $id, string $template, array $params)
+    public function includeComponent(string $id, string $template, array $params)
     {
-        if (!$this->componentItem instanceof $id)
+        if (!$this->componentItem)
         {
-            $this->componentItem = new $id($template, $params);
+            $this->componentItem = include_once $this->server->getDocumentRoot() . "/ryir/Components/" . $id . "/class.php";
         }
+        $this->componentTemplate = new \Ryir\Core\Component\Template($id, $template, $params);
+        $this->componentTemplate->render(''); //
     }
 
     private function endBuffer() // тут происходит замена макросов на значения
     {
         $res = ob_get_contents();
         $replaceMass = $this->pager->getAllReplace();
-        // var_dump($replaceMass);
-        // die();
         $res = str_replace(array_keys($replaceMass), $replaceMass, $res);
         return $res;
     }
