@@ -6,27 +6,23 @@ use Ryir\Core\Type\Dictionary;
 
 class Server extends Dictionary
 {
-    protected $arServer = [];
-
-    public function __construct(array $arServer = null)
+    public function __construct(array $values)
     {
-        if ($arServer !== null) {
-            $this->arServer = $arServer;
-        }
+        parent::__construct($values);
     }
 
     public function getDocumentRoot()
     {
-        return $this->arServer["DOCUMENT_ROOT"];
+        return $this->values['DOCUMENT_ROOT'];
     }
 
     public function getRequestUri()
     {
-        return $this->arServer["REQUEST_URI"];
+        return $this->values["REQUEST_URI"];
     }
 
     public function getScriptName()
     {
-        return $this->arServer["SCRIPT_NAME"];
+        return $this->values["SCRIPT_NAME"];
     }
 }

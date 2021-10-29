@@ -18,10 +18,8 @@ class Page
 
     public function __construct()
     {
-        // $this->docroot = $path;
         $this->templateItem = \Ryir\Core\SitesTempalte::getInstance();
         $this->path = "/templates/" . $this->templateItem->id . "/assets";
-        unset($this->templateItem);
     }
 
 

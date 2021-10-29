@@ -6,12 +6,9 @@ use Ryir\Core\Type\Dictionary;
 
 class Request extends Dictionary
 {
-    protected $arRequest = [];
-
-    public function __construct(array $arRequest = null)
+    public function __construct(array $values)
     {
-        if ($arRequest !== null) {
-            $this->arRequest = $arRequest;
-        }
+        parent::__construct($values);
     }
+    
 }

@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Ryir\\' => array($baseDir . '/ryir'),
     'Public\\' => array($baseDir . '/public'),
+    'Atice\\' => array($baseDir . '/ryir/Components'),
     'App\\' => array($baseDir . '/app'),
 );

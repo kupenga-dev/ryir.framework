@@ -3,7 +3,8 @@
         "psr-4": {
             "App\\" : "app/",
             "Public\\" : "public/",
-            "Ryir\\" : "ryir/"
+            "Ryir\\" : "ryir/",
+            "Atice\\" : "ryir/Components/"
         }
     }
 }

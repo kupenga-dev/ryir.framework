@@ -17,6 +17,7 @@ class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
         ),
         'A' => 
         array (
+            'Atice\\' => 6,
             'App\\' => 4,
         ),
     );
@@ -30,6 +31,10 @@ class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
         array (
             0 => __DIR__ . '/../..' . '/public',
         ),
+        'Atice\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/ryir/Components',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -37,15 +42,23 @@ class ComposerStaticInit892bc328903aaaecdd253e20ed7b491e
     );
 
     public static $classMap = array (
+        'App\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Controllers/AuthController.php',
         'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
         'App\\Controllers\\PublicPageController' => __DIR__ . '/../..' . '/app/Controllers/PublicPageController.php',
         'App\\Services\\Auth' => __DIR__ . '/../..' . '/app/Services/Auth.php',
         'App\\Services\\Config' => __DIR__ . '/../..' . '/app/Services/Config.php',
         'App\\Services\\Database' => __DIR__ . '/../..' . '/app/Services/Database.php',
+        'Atice\\ryir\\NeX' => __DIR__ . '/../..' . '/ryir/Components/ryir/NeX/class.php',
         'Ryir\\Core\\Application' => __DIR__ . '/../..' . '/ryir/Core/Application.php',
+        'Ryir\\Core\\Component\\Base' => __DIR__ . '/../..' . '/ryir/Core/Component/Base.php',
+        'Ryir\\Core\\Component\\Template' => __DIR__ . '/../..' . '/ryir/Core/Component/Template.php',
         'Ryir\\Core\\Page' => __DIR__ . '/../..' . '/ryir/Core/Page.php',
+        'Ryir\\Core\\Request' => __DIR__ . '/../..' . '/ryir/Core/Request.php',
         'Ryir\\Core\\Router' => __DIR__ . '/../..' . '/ryir/Core/Router.php',
-        'Ryir\\Core\\SingletonTrait' => __DIR__ . '/../..' . '/ryir/Core/Trait/SingletonTrait.php',
+        'Ryir\\Core\\Server' => __DIR__ . '/../..' . '/ryir/Core/Server.php',
+        'Ryir\\Core\\SitesTempalte' => __DIR__ . '/../..' . '/ryir/Core/SitesTempalte.php',
+        'Ryir\\Core\\Traits\\SingletonTrait' => __DIR__ . '/../..' . '/ryir/Core/Traits/SingletonTrait.php',
+        'Ryir\\Core\\Type\\Dictionary' => __DIR__ . '/../..' . '/ryir/Core/Type/Dictionary.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

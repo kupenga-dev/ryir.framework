@@ -1,17 +1,15 @@
 <?php
 
 namespace Ryir\Core;
-use \Ryir\Components;
+
 
 final class Application
 {
-    use \Ryir\Core\Traits\SingletonTrait; 
+    use \Ryir\Core\Traits\SingletonTrait;
     private $instance;
     private $__components = [];
     private $request;
     private $server;
-    private $componentItem;
-    private $componentTemplate;
     private $pager =  null; // будет объект класса
     private $template = null; //будет объект класса
 
@@ -21,7 +19,7 @@ final class Application
         $this->template = \Ryir\Core\SitesTempalte::getInstance();
         $this->request = new \Ryir\Core\Request($_REQUEST);
         $this->server = new \Ryir\Core\Server($_SERVER);
-        $this->pager->setPath($this->server->getDocumentRoot());
+        $this->pager->setPath($this->server->getDocumentRoot()); //удалить
     }
 
     public function getServer()
@@ -46,12 +44,16 @@ final class Application
 
     public function includeComponent(string $id, string $template, array $params)
     {
-        if (!$this->componentItem)
-        {
-            $this->componentItem = include_once $this->server->getDocumentRoot() . "/ryir/Components/" . $id . "/class.php";
+        $id = str_replace(":", "/",  $id);
+        $allClasses = get_declared_classes();
+        include_once($this->server->getDocumentRoot() . "/ryir/Components/" . $id . '/class.php');
+        $fileNamespace = array_diff(get_declared_classes(), $allClasses);
+        $class = reset($fileNamespace);
+        if ($class) {
+            $this->instance = new $class($id, $template, $params);
         }
-        $this->componentTemplate = new \Ryir\Core\Component\Template($id, $template, $params);
-        $this->componentTemplate->render(''); //
+
+        $this->instance->executeComponent();
     }
 
     private function endBuffer() // тут происходит замена макросов на значения
@@ -80,7 +82,6 @@ final class Application
         $res = $this->endBuffer();
         ob_end_clean();
         echo $res;
-        
     }
 
     public function start()
