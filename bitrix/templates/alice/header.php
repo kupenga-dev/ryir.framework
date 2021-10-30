@@ -19,5 +19,5 @@ $pageItem = $appItem->getPage();
     <? $pageItem->addJs('/js/jquery-3.6.0.min.js'); ?>
     <? $pageItem->addJs('/js/script.js'); ?>
     <? $pageItem->setProperty('title', 'Home'); ?>
-    <? $appItem->includeComponent('ryir:NeX', 'stis', []);?>
-    <? $appItem->includeComponent('ryir:NeX', 'stis', []);?>
+    <? $appItem->includeComponent('ryir/NeX', 'stis', [21, 23]);?>
+    <? $appItem->includeComponent('ryir/NeX', 'stis', [21, 23]);?>

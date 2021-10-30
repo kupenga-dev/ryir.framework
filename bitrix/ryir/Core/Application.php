@@ -44,16 +44,31 @@ final class Application
 
     public function includeComponent(string $id, string $template, array $params)
     {
-        $id = str_replace(":", "/",  $id);
-        $allClasses = get_declared_classes();
-        include_once($this->server->getDocumentRoot() . "/ryir/Components/" . $id . '/class.php');
-        $fileNamespace = array_diff(get_declared_classes(), $allClasses);
-        $class = reset($fileNamespace);
-        if ($class) {
-            $this->instance = new $class($id, $template, $params);
+        $isCheak = false;
+        $idforCheack = "Atice\\" . str_replace("/", "\\",  $id);
+        if ($this->__components) {
+            foreach ($this->__components as $class) {
+                if ($idforCheack == $class) {
+                    $instance = new $class($id, $template, $params);
+                    $instance->executeComponent();
+                    $isCheak = true;
+                }
+            }
         }
-
-        $this->instance->executeComponent();
+        if (!$isCheak) {
+            $allClasses = get_declared_classes();
+            $loader = $this->server->getDocumentRoot() . "/ryir/Components/" . $id .  '/class.php';
+            if (file_exists($loader)) {
+                include_once($loader);
+            }
+            $fileNamespace = array_diff(get_declared_classes(), $allClasses);
+            $namespace = reset($fileNamespace);
+            if ($namespace) {
+                $instance = new $namespace($id, $template, $params);
+                $instance->executeComponent();
+                $this->__components[$namespace] = $namespace;
+            }
+        }
     }
 
     private function endBuffer() // тут происходит замена макросов на значения
