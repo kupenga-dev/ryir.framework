@@ -1,5 +1,6 @@
 system/
 docker/
+bitrix/vendor/
 docker-compose.yml
 README.md
 .env
