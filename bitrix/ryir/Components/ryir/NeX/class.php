@@ -12,13 +12,13 @@ class NeX extends Base
     public function __construct(string $id, string $template, array $params)
     {
         parent::__construct($id, $template, $params);
-        $this->componentTemplate = new Template($this->id, $this, $this->__path, $this->__relativePath);
+        $this->componentTemplate = new Template($this->template, $this);
     }
-    public function GetResult()
+    public function getResult()
     {
         return $this->result;
     }
-    public function GetParams()
+    public function getParams()
     {
         return $this->params;
     }

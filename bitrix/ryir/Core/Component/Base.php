@@ -11,8 +11,8 @@ abstract class Base
     public $id;
     protected $params;
     public $template;
-    protected $__relativePath;
-    protected $__path;
+    public $__relativePath;
+    public $__path;
 
     abstract function executeComponent();
     protected function __construct(string $id, string $template, array $params)
