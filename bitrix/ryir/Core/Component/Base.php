@@ -2,24 +2,26 @@
 
 namespace Ryir\Core\Component;
 
+use Ryir\Core\Application;
+
 abstract class Base
 {
-
-    public $result;
+    protected $docroot;
+    protected $result;
     public $id;
-    public $params;
+    protected $params;
     public $template;
-    public $__path;
-    public $componentTemplate;
+    protected $__relativePath;
+    protected $__path;
 
     abstract function executeComponent();
     protected function __construct(string $id, string $template, array $params)
     {
-        $this->id = $id;
+        $this->id = str_replace(":", "/", $id);
         $this->template = $template;
         $this->params = $params;
-        $this->componentTemplate = new \Ryir\Core\Component\Template($this->id, $this->template, $this->params);
-        $docroot = \Ryir\Core\Application::getInstance()->getServer()->getDocumentRoot();
-        $this->__path = $docroot . "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->docroot = Application::getInstance()->getServer()->getDocumentRoot();
+        $this->__relativePath = "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->__path = $this->docroot . $this->__relativePath;
     }
 }

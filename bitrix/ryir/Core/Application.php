@@ -2,6 +2,10 @@
 
 namespace Ryir\Core;
 
+use Ryir\Core\Component\Base;
+use Ryir\Core\SitesTempalte;
+use Ryir\Core\Server;
+use Ryir\Core\Request;
 
 final class Application
 {
@@ -16,10 +20,10 @@ final class Application
     public function __construct()
     {
         $this->pager = Page::getInstance();
-        $this->template = \Ryir\Core\SitesTempalte::getInstance();
-        $this->request = new \Ryir\Core\Request($_REQUEST);
-        $this->server = new \Ryir\Core\Server($_SERVER);
-        $this->pager->setPath($this->server->getDocumentRoot()); //удалить
+        $this->template = SitesTemplate::getInstance();
+        $this->request = new Request($_REQUEST);
+        $this->server = new Server($_SERVER);
+        $this->template->setPath($this->server->getDocumentRoot());
     }
 
     public function getServer()
@@ -44,30 +48,23 @@ final class Application
 
     public function includeComponent(string $id, string $template, array $params)
     {
-        $isCheak = false;
-        $idforCheack = "Atice\\" . str_replace("/", "\\",  $id);
-        if ($this->__components) {
-            foreach ($this->__components as $class) {
-                if ($idforCheack == $class) {
-                    $instance = new $class($id, $template, $params);
-                    $instance->executeComponent();
-                    $isCheak = true;
-                }
-            }
-        }
-        if (!$isCheak) {
+        if (!isset($this->__components[$id])) {
             $allClasses = get_declared_classes();
-            $loader = $this->server->getDocumentRoot() . "/ryir/Components/" . $id .  '/class.php';
+            $loader = $this->server->getDocumentRoot() . "/ryir/Components/" . str_replace(":", "/", $id)  .  '/class.php';
             if (file_exists($loader)) {
                 include_once($loader);
             }
             $fileNamespace = array_diff(get_declared_classes(), $allClasses);
-            $namespace = reset($fileNamespace);
-            if ($namespace) {
-                $instance = new $namespace($id, $template, $params);
-                $instance->executeComponent();
-                $this->__components[$namespace] = $namespace;
+            foreach ($fileNamespace as $value) {
+                if (is_subclass_of($value, Base::class)) {
+                    $this->__components[$id] = $value;
+                    break;
+                }
             }
+        }
+        if (isset($this->__components[$id])) {
+            $instance = new $this->__components[$id]($id, $template, $params);
+            $instance->executeComponent();
         }
     }
 
@@ -76,13 +73,15 @@ final class Application
         $res = ob_get_contents();
         $replaceMass = $this->pager->getAllReplace();
         $res = str_replace(array_keys($replaceMass), $replaceMass, $res);
-        return $res;
+        $this->restartBuffer();
+        echo $res;
     }
 
 
     public function restartBuffer() // сброс буффера
     {
-        ob_get_flush();
+        ob_end_clean();
+        ob_start();
     }
 
     public function header() // подключение хэдэра шаблона сайта и старт буффера
@@ -94,9 +93,8 @@ final class Application
     public function footer() // конец буферизации, замена макросов подмены, вывод буффера
     {
         $this->template->getFooter();
-        $res = $this->endBuffer();
-        ob_end_clean();
-        echo $res;
+        $this->endBuffer();
+        ob_get_flush();
     }
 
     public function start()
@@ -108,5 +106,4 @@ final class Application
     {
         //
     }
-    // header() и footer  $id - template
 }

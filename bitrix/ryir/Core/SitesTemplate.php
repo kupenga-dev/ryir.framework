@@ -1,9 +1,11 @@
 <?php
 
 namespace Ryir\Core;
-//
 
-class SitesTempalte
+use App\Services\Config;
+
+
+class SitesTemplate
 {
 
     use \Ryir\Core\Traits\SingletonTrait;
@@ -12,10 +14,12 @@ class SitesTempalte
 
     private function __construct()
     {
-        $this->id = \App\Services\Config::get('template_id');
-        $this->__path = $_SERVER['DOCUMENT_ROOT'] . "/templates/" . $this->id;
+        $this->id = Config::get('template_id');
     }
-
+    public function setPath($docroot)
+    {
+        $this->__path = $docroot . "/templates/" . $this->id;
+    }
     public function getHeader()
     {
         include $this->__path . "/header.php";

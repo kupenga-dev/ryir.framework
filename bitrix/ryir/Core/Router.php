@@ -1,7 +1,7 @@
 <?php
 
 namespace Ryir\Core;
-
+use App\Services\Config;
 
 class Router
 {
@@ -11,7 +11,7 @@ class Router
     private $serverItem;
     public function __construct()
     {
-        self::$list[] = \App\Services\Config::get("routes");
+        self::$list[] = Config::get("routes");
         self::$rule = ["+", "?", "[", "]", "*", "^", "$", "(", ")", "{", "}", "=", "!", "<", ">", "|", ":", "-", "#", "@"];
         $appItem = new Application;
         $this->requestItem = $appItem->getRequest();
