@@ -17,11 +17,9 @@ abstract class Base
     abstract function executeComponent();
     protected function __construct(string $id, string $template, array $params)
     {
-        $this->id = str_replace(":", "/", $id);
-        $this->template = $template;
-        $this->params = $params;
+        $id = str_replace(":", "/", $id);
         $this->docroot = Application::getInstance()->getServer()->getDocumentRoot();
-        $this->__relativePath = "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->__relativePath = "/ryir/Components/" . $id . "/templates/" . $template;
         $this->__path = $this->docroot . $this->__relativePath;
     }
 }
