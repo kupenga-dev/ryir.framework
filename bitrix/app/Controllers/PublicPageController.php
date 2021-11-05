@@ -5,10 +5,9 @@ namespace App\Controllers;
 
 class PublicPageController extends BaseController
 {
-    private $path;
-    public function __construct()
+    public function __construct($server = null, $request = null)
     {
-        $this->path = $_SERVER['DOCUMENT_ROOT'] . "/public/pages/";
+        parent::__construct($server, $request);
     }
     public function run($params)
     {

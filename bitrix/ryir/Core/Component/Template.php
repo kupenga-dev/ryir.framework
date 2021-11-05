@@ -1,35 +1,49 @@
 <?php
 
 namespace Ryir\Core\Component;
-//
+
+use Ryir\Core\Application;
+
 
 class Template
 {
-    use \Ryir\Core\Traits\SingletonTrait;
     private $id;
-    private $template;
-    private $__path; //путь к шаблону на сервере
-    private $__relativePath; //url к папке с шаблоном
+    // private $template;
+    // private $params = [];
+    private $component;
 
-    private function __construct()
+    public function __construct(string $id, $component)
     {
-        $this->appItem = \Ryir\Core\Application::getInstance();
-        $this->page = $this->appItem->getPage();
-        unset($appTem);
-        $this->id = \App\Services\Config::get('component/id');
-        $this->template = \App\Services\Config::get('component/template_id');
-        $this->__path = $_SERVER['DOCUMENT_ROOT'] . "/ryir/Components/" . $this->id . "/templates/" . $this->template;
-        $this->__relativePath = "/ryir/Components/" . $this->id . "/templates/" . $this->template;
+        $this->component = $component;
+        $this->id = $id;
     }
 
-    public function render(string $page) // должен подключать файл шаблона, + стили и js | $page - страница подключения в шаблоне. По дефолту template.php
+    public function render(string $page = 'template') // должен подключать файл шаблона, + стили и js | $page - страница подключения в шаблоне. По дефолту template.php
     {
-        if (file_exists($this->__path . "/" . $page)) {
-            include $this->__path . "/" . $page;
-        } else {
-            include $this->__path . "/" . "template.php";
+        $params = $this->component->getParams();
+        $result = $this->component->getResult();
+        $pager = Application::getInstance()->getPage();
+        //подключаются файл result_mod.. 
+        if (file_exists($this->component->__path . "/" . "result_modifier.php")) {
+            include $this->component->__path . "/" . "result_modifier.php";
         }
-        $this->page->addCss($this->__relativePath . "/script.js");
-        $this->page->addJs($this->__relativePath . "/style.css");
+        //объявить две переменные для работы result и params - доступны внутри template.php
+        if (file_exists($this->component->__path . "/" . $page . ".php")) {
+            include $this->component->__path . "/" . $page . ".php";
+        } else {
+            if (file_exists($this->component->__path . "/" . "template.php")) {
+                include $this->component->__path . "/" . ".php";
+            }
+        }
+        if (file_exists($this->component->__path . "/" . "component_epilog.php")) {
+            include $this->component->__path . "/" . "component_epilog.php";
+        }
+        //наличие всех файлов
+        if (file_exists($this->component->__path . "/script.js")) {
+            $pager->addJs($this->component->__relativePath . "/script.js");
+        }
+        if (file_exists($this->component->__path . "/style.css")) {
+            $pager->addCSS($this->component->__relativePath . "/style.css");
+        }
     }
 }

@@ -14,8 +14,10 @@ $pageItem = $appItem->getPage();
 </head>
 
 <body>
-    <? $pageItem->addCss('/css/style.css'); ?>
-    <? $pageItem->addJs('/js/auth.js'); ?>
-    <? $pageItem->addJs('/js/jquery-3.6.0.min.js'); ?>
-    <? $pageItem->addJs('/js/script.js'); ?>
+    <? $pageItem->addCss('templates/alice/assets/css/style.css'); ?> 
+    <? $pageItem->addJs('templates/alice/assets/js/auth.js'); ?>
+    <? $pageItem->addJs('templates/alice/assets/js/jquery-3.6.0.min.js'); ?>
+    <? $pageItem->addJs('templates/alice/assets/js/script.js'); ?>
     <? $pageItem->setProperty('title', 'Home'); ?>
+    <? $appItem->includeComponent('ryir:NeX', 'stis', [21, 23]);?>
+    <? $appItem->includeComponent('ryir:NeX', 'stis', [21, 23]);?>

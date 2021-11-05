@@ -2,8 +2,7 @@
 
 namespace Ryir\Core\Type;
 
-class Dictionary
-implements \ArrayAccess, \Iterator, \Countable
+class Dictionary implements \ArrayAccess, \Iterator, \Countable
 {
     /**
      * @var array

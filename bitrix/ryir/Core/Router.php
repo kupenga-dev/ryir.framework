@@ -1,7 +1,7 @@
 <?php
 
 namespace Ryir\Core;
-
+use App\Services\Config;
 
 class Router
 {
@@ -11,7 +11,7 @@ class Router
     private $serverItem;
     public function __construct()
     {
-        self::$list[] = \App\Services\Config::get("routes");
+        self::$list[] = Config::get("routes");
         self::$rule = ["+", "?", "[", "]", "*", "^", "$", "(", ")", "{", "}", "=", "!", "<", ">", "|", ":", "-", "#", "@"];
         $appItem = new Application;
         $this->requestItem = $appItem->getRequest();
@@ -21,12 +21,12 @@ class Router
 
     public function enable()
     {
-        $query = str_replace(self::$rule, "", $_SERVER['REQUEST_URI']);
+        $query = str_replace(self::$rule, "", $this->serverItem->getRequestUri());
         foreach (self::$list as $router) {
             foreach ($router as $route) {
                 if (preg_match_all($route['pattern'], $query, $matches)) {
                     if (get_parent_class($route['params']['controller']) == 'App\Controllers\BaseController') {
-                        $controllerItem = new $route['params']['controller'];
+                        $controllerItem = new $route['params']['controller']($this->serverItem, $this->requestItem);
                         $controllerItem->run($route['params']);
                     } else {
                         //

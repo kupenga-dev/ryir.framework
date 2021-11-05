@@ -4,25 +4,17 @@ namespace Ryir\Core;
 
 class Page
 {
-
     private $src = [];
     private $link = [];
     private $strings = [];
-    private $path;
     private $replace = [];
-    private $templateItem;
     private $property = [];
-    private $macro = [];
     use \Ryir\Core\Traits\SingletonTrait;
 
-    private function __construct()
+    public function __construct()
     {
-        $this->templateItem = \Ryir\Core\SitesTempalte::getInstance();
-        $this->path = "/templates/" . $this->templateItem->id . "/assets";
-        unset($this->templateItem);
+        //
     }
-
-
     public function addJs($path) //добавляет src в массив сохраняя уникальность.
     {
         if (!isset($this->src[$path])) {
@@ -54,35 +46,39 @@ class Page
     }
     public function getAllReplace() // получает массив макросов и значений для замены
     {
-        $contentJS = '';
-        $contentCSS = '';
-        $contentString = '';
-        foreach ($this->src as $value) {
-            if (file_exists($value)) {
-                $contentJS .= '<script src="' . $value . '"></script>';
-            } else {
-                $contentJS .= '<script src="' . $this->path . $value . '"></script>';
-            }
-        }
-
-        foreach ($this->link as $value) {
-            if (file_exists($value)) {
-                $contentCSS .= '<link rel="stylesheet" type="text/css" href="' . $value . '">';
-            } else {
-                $contentCSS .= '<link rel="stylesheet" type="text/css" href="' . $this->path . $value . '">';
-            }
-        }
-        foreach ($this->strings as $value) {
-            $contentString .= $value;
-        }
         foreach ($this->property as $key => $value) {
-            $this->replace[$this->getPropertyMacro($key)] = $this->getProperty($key);
+            $replace[$this->getPropertyMacro($key)] = $this->getProperty($key);
         }
-        $this->replace[$this->getMacro('JS')] = $contentJS;
-        $this->replace[$this->getMacro('CSS')] = $contentCSS;
-        $this->replace[$this->getMacro('String')] = $contentString;
-        return $this->replace;
+        $replace[$this->getMacro('JS')] = $this->setContentJS($this->src);
+        $replace[$this->getMacro('CSS')] = $this->setContentCSS($this->link);
+        $replace[$this->getMacro('String')] = $this->setContentString($this->strings);
+        return $replace;
     }
+    private function setContentJS($src)
+    {
+        $contentJS = '';
+        foreach ($src as $value) {
+            $contentJS .= '<script src="' . $value . '"></script>' . "\n";
+        }
+        return $contentJS;
+    }
+    private function setContentCSS($link)
+    {
+        $contentCSS = '';
+        foreach ($link as $value) {
+            $contentCSS .= '<link rel="stylesheet" type="text/css" href="' . $value . '">' . "\n";
+        }
+        return $contentCSS;
+    }
+    private function setContentString($strings)
+    {
+        $contentString = '';
+        foreach ($strings as $value) {
+            $contentString .= $value . "\n";
+        }
+        return $contentString;
+    }
+
     public function showHead() // выводит 3 макроса замены CSS / STR / JS
     {
         echo $this->getMacro('JS');

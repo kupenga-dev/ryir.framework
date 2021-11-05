@@ -1,25 +1,29 @@
 <?php
 
 namespace Ryir\Core;
-use \Ryir\Components;
+
+use Ryir\Core\Component\Base;
+use Ryir\Core\SitesTempalte;
+use Ryir\Core\Server;
+use Ryir\Core\Request;
 
 final class Application
 {
-    use \Ryir\Core\Traits\SingletonTrait; 
+    use \Ryir\Core\Traits\SingletonTrait;
     private $instance;
     private $__components = [];
     private $request;
     private $server;
-    private $componentItem;
     private $pager =  null; // будет объект класса
     private $template = null; //будет объект класса
 
     public function __construct()
     {
         $this->pager = Page::getInstance();
-        $this->template = \Ryir\Core\SitesTempalte::getInstance();
-        $this->request = new \Ryir\Core\Request;
-        $this->server = new \Ryir\Core\Server;
+        $this->template = SitesTemplate::getInstance();
+        $this->request = new Request($_REQUEST);
+        $this->server = new Server($_SERVER);
+        $this->template->setPath($this->server->getDocumentRoot());
     }
 
     public function getServer()
@@ -42,11 +46,25 @@ final class Application
         }
     }
 
-    private function includeComponent(string $id, string $template, array $params)
+    public function includeComponent(string $id, string $template, array $params)
     {
-        if (!$this->componentItem instanceof $id)
-        {
-            $this->componentItem = new $id($template, $params);
+        if (!isset($this->__components[$id])) {
+            $allClasses = get_declared_classes();
+            $loader = $this->server->getDocumentRoot() . "/ryir/Components/" . str_replace(":", "/", $id)  .  '/class.php';
+            if (file_exists($loader)) {
+                include_once($loader);
+            }
+            $fileNamespace = array_diff(get_declared_classes(), $allClasses);
+            foreach ($fileNamespace as $value) {
+                if (is_subclass_of($value, Base::class)) {
+                    $this->__components[$id] = $value;
+                    break;
+                }
+            }
+        }
+        if (isset($this->__components[$id])) {
+            $instance = new $this->__components[$id]($id, $template, $params);
+            $instance->executeComponent();
         }
     }
 
@@ -54,16 +72,16 @@ final class Application
     {
         $res = ob_get_contents();
         $replaceMass = $this->pager->getAllReplace();
-        // var_dump($replaceMass);
-        // die();
         $res = str_replace(array_keys($replaceMass), $replaceMass, $res);
-        return $res;
+        $this->restartBuffer();
+        echo $res;
     }
 
 
     public function restartBuffer() // сброс буффера
     {
-        ob_get_flush();
+        ob_end_clean();
+        ob_start();
     }
 
     public function header() // подключение хэдэра шаблона сайта и старт буффера
@@ -75,10 +93,8 @@ final class Application
     public function footer() // конец буферизации, замена макросов подмены, вывод буффера
     {
         $this->template->getFooter();
-        $res = $this->endBuffer();
-        ob_end_clean();
-        echo $res;
-        
+        $this->endBuffer();
+        ob_get_flush();
     }
 
     public function start()
@@ -90,5 +106,4 @@ final class Application
     {
         //
     }
-    // header() и footer  $id - template
 }
