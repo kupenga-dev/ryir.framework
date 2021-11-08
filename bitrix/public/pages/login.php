@@ -3,7 +3,6 @@ $appItem = \Ryir\Core\Application::getInstance();
 $appItem->header();
 ?>
 
-<!--Форма авторизации-->
 <div class="form">
     <div class="Autorization_form">
         <form action="/registration">
