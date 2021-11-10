@@ -1,7 +1,10 @@
 <?
 $appItem = \Ryir\Core\Application::getInstance();
 $appItem->header();
+
 ?>
+
+
 <pre>
     <p class="text-center text-white">
 -------- 19.12.2020 --------
@@ -14,4 +17,6 @@ $appItem->header();
 2) создана функции авто регистрации классов
 </p>
 </pre>
+
+
 <? $appItem->footer(); ?>

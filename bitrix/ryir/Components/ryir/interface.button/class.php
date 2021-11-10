@@ -3,7 +3,7 @@
 use Ryir\Core\Component\Base;
 use Ryir\Core\Traits\ComponentTrait;
 
-class InterfaceInputNumber extends Base
+class InterfaceButton extends Base
 {
     use ComponentTrait;
 }
