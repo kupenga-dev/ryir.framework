@@ -6,5 +6,5 @@ type="<?=$result['type'];?>"
 <?isset($result['button_class']) ? print 'class="' . $result['button_class'] . '"' : '';?>
 >
 <?isset($result['default']) ? print $result['default'] : '';?>
-</button?
+</button>
 </div>
