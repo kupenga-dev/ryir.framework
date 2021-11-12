@@ -12,9 +12,7 @@ class Validator
     {
         $this->type = $stringType;
         $this->$rule = $rule;
-        if ($rule == true) {
-            $this->validators = $massValidators;
-        }
+        $this->validators = $massValidators;
     }
 
     public function chain(array $massValid, $data): bool
@@ -30,19 +28,16 @@ class Validator
 
     public function exec($value): bool
     {
-        if ($this->rule == null) {
-            return $this->$this->type($value);
-        }
         if (isset($this->validators)) {
             return $this->$this->type($this->validators, $value);
         }
-        return $this->$this->type($this->rule, $value);
+        return $this->$this->type($value);
     }
 
 
-    public function minLength($rule, $value): bool
+    public function minLength($value): bool
     {
-        if (mb_strlen($value) < $rule) {
+        if (mb_strlen($value) < $this->rule) {
             return false;
         }
         return true;
@@ -58,9 +53,9 @@ class Validator
     }
 
 
-    public function regexp($rule, $value): bool
+    public function regexp($value): bool
     {
-        if (!preg_match($rule, $value)) {
+        if (!preg_match($this->rule, $value)) {
             return false;
         }
         return true;
