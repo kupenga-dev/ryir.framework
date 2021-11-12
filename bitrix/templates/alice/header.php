@@ -16,5 +16,5 @@ $pageItem = $appItem->getPage();
     <? include_once('templates/alice/components/navbar.php'); ?>
     <title><? $pageItem->showProperty('title'); ?></title>
 </head>
+
 <body>
-    

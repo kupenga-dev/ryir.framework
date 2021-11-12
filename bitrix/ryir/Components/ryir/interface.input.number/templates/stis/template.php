@@ -10,7 +10,3 @@ $pageItem = $appItem->getPage();
 <?isset($result['additional_class']) ? print 'class="' . $result['additional_class'] . '"' : '';?>
 <?isset($result['attr']) ? print $result['additional_class'] : '';?>
 ></label>
-
-
-<? $pageItem->addCss('/style.css'); ?>
-<? $pageItem->addJs('/script.js'); ?>

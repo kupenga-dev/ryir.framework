@@ -19,7 +19,6 @@ abstract class Base
     {
         $id = str_replace(":", "/", $id);
         $this->params = $params;
-        $this->result = $params;
         $this->docroot = Application::getInstance()->getServer()->getDocumentRoot();
         $this->__relativePath = "/ryir/Components/" . $id . "/templates/" . $template;
         $this->__path = $this->docroot . $this->__relativePath;

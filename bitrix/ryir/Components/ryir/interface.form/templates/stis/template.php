@@ -18,8 +18,9 @@ $pageItem = $appItem->getPage();
 >
 <?isset($result['h1_title']) ? print $result['h1_title'] : '';?>
 </h1>
-
-
+<?if (isset($params['elements'])) {$this->component->colletctComponents($params['elements']);}?>
+</div>
+</form>
 
 
 
