@@ -37,10 +37,7 @@ class Validator
 
     private function minLength(string $value): bool
     {
-        if (mb_strlen($value) < $this->rule) {
-            return false;
-        }
-        return true;
+        return (mb_strlen($value) < $this->rule);
     }
 
     private function regexp(string $value): bool
