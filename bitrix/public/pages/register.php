@@ -1,45 +1,88 @@
 <?
 $appItem = \Ryir\Core\Application::getInstance();
 $appItem->header();
-?>
-<!--Форма регистрации-->
-<div class="form">
-    <div class="Autorization_form">
-        <form action="/">
-            <button type="submit" class="href_button">Авторизация</button>
-        </form>
-        <form action="#" id="registration__form" class="form_body">
-            <h1 class="form_title">Регистрация</h1>
-            <div class="form_item">
-                <label for="registration_login" class="form_label">Введите логин*:</label>
-                <input type="text" id="registration_login" name="username" class="form_input _req _username">
-                <small class="form-control"></small>
-            </div>
-            <div class="form_item">
-                <label for="registration_password" class="form_label">Введите пароль*:</label>
-                <input type="password" id="registration_Password" name="password" class="form_input _req _password">
-                <small class="form-control"></small>
-            </div>
-            <div class="form_item">
-                <label for="Confirm_Password" class="form_label">Подтвердите пароль*:</label>
-                <input type="password" id="confirm_Password" name="confirm_password" class="form_input _req _confirm_password">
-                <small class="form-control"></small>
-            </div>
-            <div class="form_item">
-                <label for="e-mail" class="form_label">Введите E-mail*:</label>
-                <input type="email" id="e-mail" name="email" class="form_input _req _email">
-                <small class="form-control"></small>
-            </div>
-            <div class="form_item">
-                <label for="name" class="form_label">Ваше Имя*:</label>
-                <input type="text" id="name" name="name" class="form_input _req _name">
-                <small class="form-control"></small>
-            </div>
-            <div class="form_item">
-                <button type="submit" id="registration_button" class="form_button">Зарегестрироваться</button>
-            </div>
+$array = [
+    'div_class' => 'form',
+    'form_class' => 'form_body', 
+    'h1_title' => 'Регистрация',
+    'id' => 'form',
+    'h1_class' => 'form_title',
+    'elements' => [ 
+        [
+            'type' => 'text',
+            'label_class' => 'form_label',
+            'div_class' => 'form_item',
+            'input_class' => [
+                'form_input',
+                '_req',
+                '_username'
+            ],
+            'name' => 'username',
+            'title' => 'Логин',
+            'default' => 'Введите логин*:'
+        ],
+        [
+            'type' => 'password',
+            'label_class' => 'form_label',
+            'div_class' => 'form_item',
+            'input_class' => [
+                'form_input',
+                '_req',
+                '_username'
+            ],
+            'name' => 'password',
+            'title' => 'пароль',
+            'default' => 'Введите пароль*:'
+        ],
+        [
+            'type' => 'password',
+            'label_class' => 'form_label',
+            'div_class' => 'form_item',
+            'input_class' => [
+                'form_input',
+                '_req',
+                '_username'
+            ],
+            'name' => 'confirn_password',
+            'title' => 'пароль',
+            'default' => 'Подтвердите пароль*:'
+        ],
+        [
+            'type' => 'e-mail',
+            'label_class' => 'form_label',
+            'div_class' => 'form_item',
+            'input_class' => [
+                'form_input',
+                '_req',
+                '_username'
+            ],
+            'name' => 'email',
+            'title' => 'Логин',
+            'default' => 'Введите E-mail*:'
+        ],
+        [
+            'type' => 'text',
+            'label_class' => 'form_label',
+            'div_class' => 'form_item',
+            'input_class' => [
+                'form_input',
+                '_req',
+                '_username'
+            ],
+            'name' => 'name',
+            'title' => 'Логин',
+            'default' => 'Введите имя*:'
+        ],
+        [
+            'type' => 'submit',
+            'div_class' => 'form_item',
+            'button_class' => 'form_button',
+            'id' => 'registration_button',
+            'default' => 'Зарегестрироваться'
+        ],
 
-        </form>
-    </div>
-</div>
+    ]
+];
+?>
+<? $appItem->includeComponent('ryir:interface.form', 'stis', $array); ?>
 <? $appItem->footer(); ?>

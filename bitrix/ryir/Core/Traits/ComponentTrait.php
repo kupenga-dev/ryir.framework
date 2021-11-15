@@ -11,4 +11,13 @@ trait ComponentTrait
         parent::__construct($id, $template, $params);
         $this->componentTemplate = new Template($template, $this);
     }
+
+    public function getResult()
+    {
+        return $this->result;
+    }
+    public function getParams()
+    {
+        return $this->params;
+    }
 }
