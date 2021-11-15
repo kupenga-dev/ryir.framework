@@ -54,17 +54,6 @@ class Validator
         return $this->regexp($value);
     }
 
-    private function name(string $value): bool
-    {
-        $this->rule = '/^[a-zA-Z]{2, 2}+$/';
-        return $this->regexp($value);
-    }
-
-    // private function password(string $value): bool
-    // {
-    //     $this->rule = '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/';
-    //     return $this->regexp($value);
-    // }
     private function username(string $value)
     {
         return $this->minLength($value);
