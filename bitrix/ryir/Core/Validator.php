@@ -58,10 +58,7 @@ class Validator
     private function in($value): bool
     {
         if (is_array($value)) {
-            if (count(array_intersect($value, $this->rule)) !== count($value)) {
-                return false;
-            }
-            return true;
+            return (count(array_intersect($value, $this->rule)) !== count($value));
         }
         return in_array($value, $this->rule);
     }
