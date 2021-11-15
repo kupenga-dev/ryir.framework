@@ -45,51 +45,38 @@ class Validator
 
     private function regexp(string $value): bool
     {
-        if (!preg_match($this->rule, $value)) {
-            return false;
-        }
-        return true;
+        return preg_match($this->rule, $value);
     }
 
     private function email(string $value): bool
     {
-        //через regexp
         $this->rule = '/^([a-zA-Z0-9_-]+\.)*[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.[a-zA-Z]{2,10}$/';
-        if (!$this->regexp($value)) {
-            return false;
-        }
-        return true;
+        return $this->regexp($value);
     }
 
     private function name(string $value): bool
     {
         $this->rule = '/^[a-zA-Z]{2, 2}+$/';
-        if (!$this->regexp($value)) {
-            return false;
-        }
-        return true;
+        return $this->regexp($value);
     }
 
-    private function password(string $value): bool
-    {
-        $this->rule = '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/';
-        if (!$this->regexp($value)) {
-            return false;
-        }
-        return true;
-    }
+    // private function password(string $value): bool
+    // {
+    //     $this->rule = '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/';
+    //     return $this->regexp($value);
+    // }
     private function username(string $value)
     {
-        if (!$this->minLength($value)) {
-            return false;
-        }
-        return true;
+        return $this->minLength($value);
     }
     private function in($value): bool
     {
-        if (!in_array($value, $this->rule)) {
-            return false;
+        if (is_array($value)) {
+            if (count(array_intersect($value, $this->rule)) !== count($value)) {
+                return false;
+            }
+            return true;
         }
-        return true;
+        return in_array($value, $this->rule);
     }
 }
