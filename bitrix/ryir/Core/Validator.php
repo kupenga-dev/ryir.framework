@@ -4,15 +4,22 @@ namespace Ryir\Core;
 
 class Validator
 {
-    private string $type;
+    private $type;
     private $rule;
-    private ?array $validators;
+    private $validators;
 
-    public function __construct(string $stringType, $rule = '', array $massValidators = null)
+    public function __construct($stringType, $rule = null, array $massValidators = null)
     {
         $this->type = $stringType;
-        $this->$rule = $rule;
-        $this->validators = $massValidators;
+        if (isset($rule))
+        {
+            $this->$rule = $rule;
+        }
+        if (isset($massValidators))
+        {
+            $this->validators = $massValidators;
+        }
+        
     }
 
     private function chain(string $value): bool
@@ -20,8 +27,9 @@ class Validator
         if (!isset($this->validators)) {
             return false;
         }
+        var_dump($this->validators);
+        die();
         foreach ($this->validators as $class) {
-            // var_dump($class);
             if (!$class->exec($value)) {
                 return false;
             }
@@ -46,7 +54,6 @@ class Validator
 
     private function regexp(string $value): bool
     {
-        var_dump($this);
         return preg_match($this->rule, $value);
     }
 

@@ -72,7 +72,7 @@ class Auth
 
         $valid = new Validator('chain', 'true', [
             new Validator('isEmpty'),
-            new Validator('regexp', "/^[a-zA-Z]{2, 2}+$/"),
+            new Validator('regexp', '/^[a-zA-Z]{2, 2}+$/'),
         ]);
         $valid->exec(htmlspecialchars($data['name']));
         if (!$valid) {
