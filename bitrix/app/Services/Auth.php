@@ -61,43 +61,26 @@ class Auth
 
     private function isValidRegistration($data): bool
     {
-        $valid = new Validator('chain', 'true', [
-            new Validator('isEmpty'),
-            new Validator('regexp', '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/'),
-        ]);
+        $valid = new Validator('regexp', '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/');
         $valid->exec(htmlspecialchars($data['password']));
         if (!$valid) {
             return false;
         }
 
-        $valid = new Validator('chain', 'true', [
-            new Validator('isEmpty'),
-            new Validator('regexp', '/^[a-zA-Z]{2, 2}+$/'),
-        ]);
+        $valid = new Validator('regexp', "/^[a-zA-Z]{2, 2}+$/");
         $valid->exec(htmlspecialchars($data['name']));
         if (!$valid) {
             return false;
         }
 
-        $valid = new Validator('chain', 'true', [
-            new Validator('isEmpty'),
-            new Validator('email'),
-        ]);
+        $valid = new Validator('email');
         $valid->exec(htmlspecialchars($data['email']));
         if (!$valid) {
             return false;
         }
 
-        $valid = new Validator('chain', 'true', [
-            new Validator('isEmpty'),
-            new Validator('minLength', 6),
-        ]);
+        $valid = new Validator('minLength', 6);
         $valid->exec(htmlspecialchars($data['username']));
-        if (!$valid) {
-            return false;
-        }
-        $valid = new Validator('isEmpty');
-        $valid->exec(htmlspecialchars($data['confirn_password']));
         if (!$valid) {
             return false;
         }
