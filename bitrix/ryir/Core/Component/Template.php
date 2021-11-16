@@ -46,12 +46,15 @@ class Template
 
 
         //наличие всех файлов
-        if (file_exists($this->component->__path . "/auth.js")) {
-            $pager->addJs($this->component->__relativePath . "/auth.js");
-        } elseif (file_exists($this->component->__path . "/register.js")) {
-            $pager->addJs($this->component->__relativePath . "/register.js");
-            var_dump($this->component->__relativePath);
+        if (isset($result['js'])) {
+            if (file_exists($this->component->__path . "/" . $result['js'])) {
+                $pager->addJs($this->component->__relativePath . "/" . $result['js']);
+            }
         }
+
+        // } elseif (file_exists($this->component->__path . "/register.js")) {
+        //     $pager->addJs($this->component->__relativePath . "/register.js");
+        // }
         if (file_exists($this->component->__path . "/style.css")) {
             $pager->addCSS($this->component->__relativePath . "/style.css");
         }

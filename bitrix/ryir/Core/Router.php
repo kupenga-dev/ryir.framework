@@ -1,6 +1,7 @@
 <?php
 
 namespace Ryir\Core;
+
 use App\Services\Config;
 
 class Router

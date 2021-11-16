@@ -6,6 +6,7 @@ $pageItem = $appItem->getPage();
 <html lang="ru">
 
 <head>
+    <meta charset="UTF-8">
     <? $pageItem->addCSS('ryir/libs/bootstrap-5.1.3-dist/css/bootstrap-grid.min.css'); ?>
     <? $pageItem->addCSS('ryir/libs/bootstrap-5.1.3-dist/css/bootstrap.css'); ?>
     <? $pageItem->addCss('templates/alice/assets/css/style.css'); ?>

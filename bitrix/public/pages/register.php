@@ -5,7 +5,8 @@ $array = [
     'div_class' => 'form',
     'form_class' => 'form_body', 
     'h1_title' => 'Регистрация',
-    'id' => 'form',
+    'id' => 'register__form',
+    'js' => 'register.js',
     'h1_class' => 'form_title',
     'elements' => [ 
         [
@@ -28,7 +29,7 @@ $array = [
             'input_class' => [
                 'form_input',
                 '_req',
-                '_username'
+                '_password'
             ],
             'name' => 'password',
             'title' => 'пароль',
@@ -41,7 +42,7 @@ $array = [
             'input_class' => [
                 'form_input',
                 '_req',
-                '_username'
+                '_confirn_password'
             ],
             'name' => 'confirn_password',
             'title' => 'пароль',
@@ -54,7 +55,7 @@ $array = [
             'input_class' => [
                 'form_input',
                 '_req',
-                '_username'
+                '_email'
             ],
             'name' => 'email',
             'title' => 'Логин',
@@ -67,10 +68,9 @@ $array = [
             'input_class' => [
                 'form_input',
                 '_req',
-                '_username'
+                '_name'
             ],
             'name' => 'name',
-            'title' => 'Логин',
             'default' => 'Введите имя*:'
         ],
         [

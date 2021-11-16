@@ -4,7 +4,8 @@ $appItem->header();
 $array = [
     'div_class' => 'form',
     'form_class' => 'form_body', 
-    'id' => 'form',
+    'id' => 'auth__form',
+    'js' => 'auth.js',
     'h1_title' => 'Авторизация',
     'h1_class' => 'form_title',
     'elements' => [ 
@@ -27,7 +28,6 @@ $array = [
             'input_class' => [
                 'form_input',
                 '_req',
-                '_username'
             ],
             'name' => 'password',
             'title' => 'пароль',

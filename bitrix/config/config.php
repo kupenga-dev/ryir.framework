@@ -75,9 +75,5 @@ return [
             ]
         ],
     ],
-    // "component" => [
-    //     "id" => "NeX",
-    //     "template_id" => "alice",
-    // ]
     "template_id" => "alice"
 ];
