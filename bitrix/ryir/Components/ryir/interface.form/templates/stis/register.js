@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let error = formValidate(form);
         let formData = new FormData(form);
         formData.forEach((value, key) => data[key] = value);
+
         let jsonData = JSON.stringify(data);
+        console.log(jsonData);
         if (error === 0) {
             form.classList.add('_sending');
             let response = await fetch('/auth/register', {
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 dataType: 'JSON',
                 body: jsonData
+
             });
             if (response.ok) {
                 form.innerHTML = '';
@@ -41,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let name = document.querySelector('._name');
 
         if (username.value === '' || username.value.length < 6) {
-            formAddError();
+            formAddError(username);
             error++;
 
         }
