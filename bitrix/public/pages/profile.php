@@ -1,5 +1,5 @@
 <?php
-if (!$_SESSION["user"]) {
+if (!isset($_SESSION["user"])) {
     \Ryir\Core\Router::redirect('/');
 }
 ?>
@@ -12,7 +12,7 @@ $appItem->header();
     <h1 class="profile">Hello, <?= $_SESSION['user']['name'] ?></h1>
 </div>
 <form action="/auth/logout" method="post">
-    <button class="href_button _profile" type="submit">Logout</button>
+    <button class="form_button _profile" type="submit">Logout</button>
 </form>
 
 <? $appItem->footer(); ?>

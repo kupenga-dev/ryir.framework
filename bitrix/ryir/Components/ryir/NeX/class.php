@@ -11,15 +11,6 @@ class NeX extends Base
     protected $result; 
     protected $params = []; 
     use ComponentTrait;
-    
-    public function getResult()
-    {
-        return $this->result;
-    }
-    public function getParams()
-    {
-        return $this->params;
-    }
 
     public function executeComponent()
     {

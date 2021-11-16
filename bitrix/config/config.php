@@ -9,15 +9,15 @@ return [
         [
             'pattern' => "~^/$~",
             'params' => [
-                'path' => 'login.php',
+                'path' => 'home.php',
                 'method' => 'GET',
                 'controller' => "\App\Controllers\PublicPageController"
             ]
         ],
         [
-            'pattern' => "~home~",
+            'pattern' => "~login~",
             'params' => [
-                'path' => 'home.php',
+                'path' => 'login.php',
                 'method' => 'GET',
                 'controller' => "\App\Controllers\PublicPageController"
             ]
@@ -75,9 +75,5 @@ return [
             ]
         ],
     ],
-    // "component" => [
-    //     "id" => "NeX",
-    //     "template_id" => "alice",
-    // ]
     "template_id" => "alice"
 ];
