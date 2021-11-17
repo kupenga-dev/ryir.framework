@@ -1,5 +1,6 @@
 system/
 docker/
+bitrix/app/Services/database.json
 bitrix/vendor/
 docker-compose.yml
 README.md
