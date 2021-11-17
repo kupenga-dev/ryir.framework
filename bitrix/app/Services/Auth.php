@@ -21,11 +21,15 @@ class Auth
         if ($this->isValidRegistration($this->data)) {
             $sault = $this->GenerateRandomString();
             $hashSault = md5($sault);
+            $username = $this->data['username'];
+            $sault = [
+                "$username" => "$hashSault",
+            ];
+            Config::addSault($sault);
             $hashPassword = md5($this->data['password'] . $hashSault);
             $arrayForUserCreation = array(
                 'username' => $this->data['username'],
                 'password' => $hashPassword,
-                'sault' => $hashSault,
                 'email' => $this->data['email'],
                 'name' => $this->data['name']
             );
@@ -43,7 +47,8 @@ class Auth
         if (!$user) {
             return 'Неверный логин';
         }
-        if ($user && md5($password . $user['sault']) === $user['password']) {
+        $sault = Config::get("saults/$username");
+        if (md5($password . $sault) === $user['password']) {
             setcookie($user['name'], $user['username'], time() + 3600);
             $_SESSION['user'] = [
                 "username" => $user['username'],
@@ -62,29 +67,27 @@ class Auth
     private function isValidRegistration($data): bool
     {
         $valid = new Validator('regexp', '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/');
-        $valid->exec(htmlspecialchars($data['password']));
-        if (!$valid) {
+        $result = $valid->exec(htmlspecialchars($data['password']));
+        if (!$result) {
             return false;
         }
 
-        $valid = new Validator('regexp', "/^[a-zA-Z]{2, 2}+$/");
-        $valid->exec(htmlspecialchars($data['name']));
-        if (!$valid) {
+        $valid = new Validator('regexp', "/^(?=^.{2,2}$)(?=.*[a-z][A-Z]).*$/i");
+        $result = $valid->exec(htmlspecialchars($data['name']));
+        if (!$result) {
             return false;
         }
-
         $valid = new Validator('email');
-        $valid->exec(htmlspecialchars($data['email']));
-        if (!$valid) {
+        $result = $valid->exec(htmlspecialchars($data['email']));
+        if (!$result) {
             return false;
         }
-
         $valid = new Validator('minLength', 6);
-        $valid->exec(htmlspecialchars($data['username']));
-        if (!$valid) {
+        $result = $valid->exec(htmlspecialchars($data['username']));
+        var_dump($result);
+        if (!$result) {
             return false;
         }
-
         if (htmlspecialchars($data['password']) !== htmlspecialchars($data['confirn_password'])) {
             return false;
         }

@@ -14,10 +14,6 @@ class Database
             $this->users = null;
         }
     }
-    public function __destruct()
-    {
-        $this->users = NULL;
-    }
 
     public function findUserByUsername($username, $data = false)
     {
@@ -25,8 +21,6 @@ class Database
             if ($user['username'] === $username) {
                 if ($data === true) {
                     return $user;
-                } else {
-                    return true;
                 }
             }
         }

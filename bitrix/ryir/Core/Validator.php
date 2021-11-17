@@ -20,7 +20,7 @@ class Validator
         }
     }
 
-    private function chain(string $value): bool
+    private function chain($value): bool
     {
         if (!isset($this->validators)) {
             return false;
@@ -44,7 +44,7 @@ class Validator
 
     private function minLength(string $value): bool
     {
-        return (mb_strlen($value) > $this->rule);
+        return (mb_strlen($value) >= $this->rule);
     }
 
     private function regexp(string $value): bool
