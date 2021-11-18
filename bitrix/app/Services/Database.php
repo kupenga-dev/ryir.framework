@@ -22,12 +22,13 @@ class Database
                 if ($data === true) {
                     return $user;
                 }
+                return true;
             }
         }
         return false;
     }
 
-    public function findUserByEmail($emal)
+    public function findUserByEmail($email)
     {
         foreach ($this->users as $user) {
             if ($user['email'] === $email) {

@@ -21,13 +21,4 @@ class Config
         }
         return $configForGetting;
     }
-    public static function addSault($value)
-    {
-        $mass = self::get();
-        foreach ($value as $key => $value) {
-            $mass['saults'][$key] = $value;
-        }
-        $data = '<?php return ' . var_export($mass, true) . ";";
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/config/config.php", $data);
-    }
 }

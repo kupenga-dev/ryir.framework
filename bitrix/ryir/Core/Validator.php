@@ -2,14 +2,18 @@
 
 namespace Ryir\Core;
 
+use App\Services\Database;
+
 class Validator
 {
     private string $type;
     private $rule;
     private array $validators;
+    private $databaseItem;
 
     public function __construct(string $stringType, $rule = null, array $massValidators = null)
     {
+        $this->databaseItem = new Database;
         $this->type = $stringType;
         if (isset($rule)) {
             $this->rule = $rule;
@@ -47,6 +51,14 @@ class Validator
         return (mb_strlen($value) >= $this->rule);
     }
 
+    private function isUniqueEmail($value)
+    {
+        return !$this->databaseItem->findUserByEmail($value);
+    }
+    private function isUniqueUsername($value)
+    {
+        return !$this->databaseItem->findUserByUsername($value);
+    }
     private function regexp(string $value): bool
     {
         return preg_match($this->rule, $value);

@@ -1,99 +1,80 @@
-<?php return array (
-  'db' => 
-  array (
+<?php
+
+return [
+  'db' => [
     'login' => 'gregreg',
     'password' => 'ihgjoref',
-  ),
-  'routes' => 
-  array (
-    0 => 
-    array (
-      'pattern' => '~^/$~',
-      'params' => 
-      array (
+  ],
+  'routes' => [
+    [
+      'pattern' => "~^/$~",
+      'params' => [
         'path' => 'home.php',
         'method' => 'GET',
-        'controller' => '\\App\\Controllers\\PublicPageController',
-      ),
-    ),
-    1 => 
-    array (
-      'pattern' => '~login~',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\PublicPageController"
+      ]
+    ],
+    [
+      'pattern' => "~login~",
+      'params' => [
         'path' => 'login.php',
         'method' => 'GET',
-        'controller' => '\\App\\Controllers\\PublicPageController',
-      ),
-    ),
-    2 => 
-    array (
-      'pattern' => '~^/registration$~',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\PublicPageController"
+      ]
+    ],
+    [
+      'pattern' => "~^/registration$~",
+      'params' => [
         'path' => 'register.php',
         'method' => 'GET',
-        'controller' => '\\App\\Controllers\\PublicPageController',
-      ),
-    ),
-    3 => 
-    array (
-      'pattern' => '#/profile/(?P<id>\\d+)$#i',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\PublicPageController"
+      ]
+    ],
+    [
+      'pattern' => "#/profile/(?P<id>\d+)$#i",
+      'params' => [
         'path' => 'profile.php',
         'method' => 'GET',
-        'controller' => '\\App\\Controllers\\PublicPageController',
-      ),
-    ),
-    4 => 
-    array (
-      'pattern' => '#/profile#i',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\PublicPageController"
+      ]
+    ],
+    [
+      'pattern' => "#/profile#i",
+      'params' => [
         'path' => 'profile.php',
         'method' => 'GET',
-        'controller' => '\\App\\Controllers\\PublicPageController',
-      ),
-    ),
-    5 => 
-    array (
-      'pattern' => '~^/auth/register$~',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\PublicPageController"
+      ]
+    ],
+    [
+      'pattern' => "~^/auth/register$~",
+      'params' => [
         'method' => 'POST',
-        'controller' => '\\App\\Controllers\\AuthController',
-        'class' => '\\App\\Services\\Auth',
-        'action' => 'register',
-      ),
-    ),
-    6 => 
-    array (
-      'pattern' => '~^/auth/auth$~',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\AuthController",
+        'class' => "\App\Services\Auth",
+        'action' => "register",
+      ],
+
+    ],
+    [
+      'pattern' => "~^/auth/auth$~",
+      'params' => [
         'method' => 'POST',
-        'controller' => '\\App\\Controllers\\AuthController',
-        'class' => '\\App\\Services\\Auth',
-        'action' => 'auth',
-      ),
-    ),
-    7 => 
-    array (
-      'pattern' => '~^/auth/logout$~',
-      'params' => 
-      array (
+        'controller' => "\App\Controllers\AuthController",
+        'class' => "\App\Services\Auth",
+        'action' => "auth",
+      ]
+    ],
+    [
+      'pattern' => "~^/auth/logout$~",
+      'params' => [
         'method' => 'POST',
-        'controller' => '\\App\\Controllers\\AuthController',
-        'class' => '\\App\\Services\\Auth',
-        'action' => 'logout',
-      ),
-    ),
-  ),
-  'template_id' => 'alice',
-  'saults' => 
-  array (
-    'test23' => 'eac28471b78c2c8b0efbabce1d461961',
-    'test33' => '8ba2c912f6012aa579e84bc918573434',
-  ),
-);
+        'controller' => "\App\Controllers\AuthController",
+        'class' => "\App\Services\Auth",
+        'action' => "logout",
+      ]
+    ],
+  ],
+  "template_id" => "alice",
+  "sault" => '$1$fokew342&',
+];
