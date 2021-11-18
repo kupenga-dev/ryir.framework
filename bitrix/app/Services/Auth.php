@@ -67,11 +67,17 @@ class Auth
             "password" => new Validator('regexp', '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/'),
             "email" => new Validator('chain', true, [
                 new Validator('email'),
-                new Validator('callable', null ,[$this->databaseItem, 'findUserByEmail']),
+                new Validator('callable', null, [
+                    'class' => $this->databaseItem,
+                    'method' => 'findUserByEmail',
+                ]),
             ]),
             "username" => new Validator('chain', true, [
                 new Validator('minLength', 6),
-                new Validator('callable', null ,[$this->databaseItem, 'findUserByUsername']),
+                new Validator('callable', null, [
+                    'class' => $this->databaseItem,
+                    'method' => 'findUserByUsername'
+                ]),
             ]),
         ];
 

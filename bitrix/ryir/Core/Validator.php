@@ -50,8 +50,8 @@ class Validator
 
     private function callable($value)
     {
-        $class = $this->validators[0];
-        $method = $this->validators[1];
+        $class = $this->validators['class'];
+        $method = $this->validators['method'];
         return !$class->$method($value);
     }
 
