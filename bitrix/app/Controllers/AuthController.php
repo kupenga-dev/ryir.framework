@@ -12,7 +12,7 @@ class AuthController extends BaseController
 
     public function run($params)
     {
-        $authItem = new $params['class'];
+        $authItem = new $params['class'](json_decode(file_get_contents("php://input"), true));
         $method = $params['action'];
         $authItem->$method();
     }

@@ -7,6 +7,7 @@
 </label>
 <input
 type="<?=$result['type'];?>"
+<?isset($result['name']) ? print 'name="' . $result['name'] . '"' : '';?>
 <?isset($result['input_class']) ? print 'class="' . $result['input_class'] . '"' : '';?>
 >
 </div>

@@ -1,6 +1,6 @@
 "use strict"
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('form');
+    const form = document.getElementById('auth__form');
     form.addEventListener('submit', FormSend);
     async function FormSend(event)
     {
@@ -22,10 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: jsonData
             });
             if (response.ok) {
-                console.log(response.text);
                 form.innerHTML = '';
                 form.reset();
-                // location.replace('/profile');
                 form.classList.remove('_sending');
             }
             else {

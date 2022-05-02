@@ -1,12 +1,7 @@
 "use strict"
-
-
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('form');
+    const form = document.getElementById('register__form');
     form.addEventListener('submit', FormSend);
-
-
-
     async function FormSend(event) {
         event.preventDefault();
         let data = {};
@@ -31,13 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.innerHTML = '';
                 form.reset();
                 form.classList.remove('_sending');
-                location.replace('/');
-                return alert("регистрация прошла успешно");
             }
             else {
                 form.classList.remove('_sending');
-                return alert('Поля заполнены некорректно');
-
             }
         }
 
@@ -45,19 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function formValidate(form) {
         let error = 0;
-        console.log(error);
-        // let patternForPassword = !/^[a-zA-Z0-9]{6, 16}+$/;
-        // let patternForName = /^[a-zA-Z]{1,2}$/ 
-        // let patterForEmail = !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2, 8})+$/;
 
-        let username = document.querySelector('#registration_login');
-        let password = document.querySelector('#registration_Password');
-        let confirm_password = document.querySelector('#confirm_Password');
-        let email = document.querySelector('#e-mail');
-        let name = document.querySelector('#name');
-        console.log(email.value);
-        console.log(email.value.length);
-        console.log(!/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/.test(email.value));
+        let username = document.querySelector('._username');
+        let password = document.querySelector('._password');
+        let confirm_password = document.querySelector('._confirn_password');
+        let email = document.querySelector('._email');
+        let name = document.querySelector('._name');
 
         if (username.value === '' || username.value.length < 6) {
             formAddError(username);

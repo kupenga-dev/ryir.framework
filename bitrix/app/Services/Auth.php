@@ -2,108 +2,100 @@
 
 namespace App\Services;
 
+use Ryir\Core\Router;
+use Ryir\Core\Validator;
 
-class Auth 
+class Auth
 {
     private $databaseItem;
     private $data;
-   
 
-    public function __construct()
+    public function __construct($data)
     {
         $this->databaseItem = new Database;
-        $this->data = json_decode(file_get_contents("php://input"), true);
-    }
-    public function __destruct()
-    {
-        $this->databaseItem = NULL;
+        $this->data = $data;
     }
 
-    public function register()
-    {   
-        $data = $this->data;
-        if($this->isValidRegistration($data))
-        {
-            $sault = $this->GenerateRandomString();
-            $hashSault = md5($sault);
-            $hashPassword = md5($data['password'] . $hashSault);
+    public function register(): bool
+    {
+        if ($this->isValidRegistration($this->data)) {
+            $sault = Config::get('sault');
+            $username = $this->data['username'];
+            $hashPassword = crypt($this->data['password'], $sault);
             $arrayForUserCreation = array(
-                'username' => $data['username'],
+                'username' => $this->data['username'],
                 'password' => $hashPassword,
-                'sault' => $hashSault,
-                'email' => $data['email'],
-                'name' => $data['name']
+                'email' => $this->data['email'],
+                'name' => $this->data['name']
             );
             $this->databaseItem->createUser($arrayForUserCreation);
-            die();
+            return true;
         }
         return false;
     }
 
-    public function auth()
+    public function auth(): bool
     {
-        $data = $this->data;
-        $username = $data['username'];
-        $password = $data['password'];
+        $username = $this->data['username'];
+        $password = $this->data['password'];
         $user = $this->databaseItem->findUserByUsername($username, true);
-        if(!$user)
-        {
+        if (!$user) {
             return 'Неверный логин';
-        } elseif ($user && md5($password . $user['sault']) === $user['password'])
-        {
-            session_start();
-            setcookie($user['name'], $user['username'], time()+3600);
+        }
+        $sault = Config::get("sault");
+        $hashPassword = crypt($password, $sault);
+        if (hash_equals($hashPassword, $user['password'])) {
+            setcookie($user['name'], $user['username'], time() + 3600);
             $_SESSION['user'] = [
                 "username" => $user['username'],
                 "name" => $user['name']
             ];
-            die();
-        } else {
-            return 'Неверный пароль';
         }
+        return true;
     }
 
     public function logout()
     {
         unset($_SESSION['user']);
-        \Ryir\Core\Router::redirect('/');
+        Router::redirect('/');
     }
 
-    private function isValidRegistration($data)
+    private function isValidRegistration($data): bool
     {
-        $patternForPassword = '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/';
-        $patternForName = '/^[a-zA-Z]{2, 2}+$/';
-        $patternForEmail = '/^([a-zA-Z0-9_-]+\.)*[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.[a-zA-Z]{2,10}$/';
+        $map = [
+            "name" => new Validator('regexp', '/^(?=^.{2,2}$)(?=.*[a-z][A-Z]).*$/i'),
+            "password" => new Validator('regexp', '/(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/'),
+            "email" => new Validator('chain', true, [
+                new Validator('email'),
+                new Validator('callable', null, [
+                    'class' => $this->databaseItem,
+                    'method' => 'findUserByEmail',
+                ]),
+            ]),
+            "username" => new Validator('chain', true, [
+                new Validator('minLength', 6),
+                new Validator('callable', null, [
+                    'class' => $this->databaseItem,
+                    'method' => 'findUserByUsername'
+                ]),
+            ]),
+        ];
 
-        if (!empty($data['name']) || !empty($data['username']) || !empty($data['email']) || !empty($data['password']) || !empty($data['confirm_password']))
-        {
-            if (mb_strlen($data['username']) > 6 || preg_match($patternForName, $data['name']) || preg_match($patternForPassword, $data['password']) || preg_match($patternForEmail, $data['email']))
-            {
-                if(htmlspecialchars($data['password']) === htmlspecialchars($data['confirm_password']))
-                {
-                    if(!$this->databaseItem->findUserByUsername($data['username']))
-                    {
-                        if(!$this->databaseItem->findUserByEmail($data['email']))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }   
+        foreach ($data as $key => $value) {
+            if (!isset($map[$key])) {
+                continue;
+            }
+            $valid = $map[$key];
+            $result = $valid->exec(htmlspecialchars($value));
+            if (!$result) {
+                return false;
+            }
         }
-        return false;
-    }
 
-    private function GenerateRandomString()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = mb_strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i <= 8; $i++) 
-        {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
+        if (htmlspecialchars($data['password']) !== htmlspecialchars($data['confirn_password'])) {
+            return false;
         }
-        return $randomString;
+
+        return true;
     }
-    
 }

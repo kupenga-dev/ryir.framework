@@ -9,14 +9,10 @@ class Database
     public function __construct()
     {
         if (file_exists(__DIR__ . '/database.json')) {
-            return $this->users = json_decode(file_get_contents(__DIR__ . '/database.json'), true);
+            $this->users = json_decode(file_get_contents(__DIR__ . '/database.json'), true);
         } else {
-            return $this->users = null;
+            $this->users = null;
         }
-    }
-    public function __destruct()
-    {
-        $this->users = NULL;
     }
 
     public function findUserByUsername($username, $data = false)
@@ -25,15 +21,14 @@ class Database
             if ($user['username'] === $username) {
                 if ($data === true) {
                     return $user;
-                } else {
-                    return true;
                 }
+                return true;
             }
         }
         return false;
     }
 
-    public function findUserByEmail($emal)
+    public function findUserByEmail($email)
     {
         foreach ($this->users as $user) {
             if ($user['email'] === $email) {
